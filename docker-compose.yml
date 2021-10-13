@@ -7,11 +7,11 @@ services:
     ports:
       - 5432:5432
   node:
-    image: logion-node:${NODE_TAG:-latest}
+    image: logionnetwork/logion-node:${NODE_TAG:-latest}
     ports:
       - 9944:9944
   backend:
-    image: logion-backend:${BACKEND_TAG:-latest}
+    image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
     environment:
       - TYPEORM_HOST=private-database
       - WS_PROVIDER_URL=ws://node:9944
@@ -19,7 +19,7 @@ services:
       - node
       - private-database
   frontend:
-    image: logion-frontend:${FRONTEND_TAG:-latest}
+    image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
     ports:
       - 80:80
     volumes:
