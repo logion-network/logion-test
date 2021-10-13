@@ -23,6 +23,9 @@ account switcher (upper right corner of the window) in order to:
 - switch to another account
 - log out.
 
+Note that, by default, logion's Docker images with `latest` tag are being used. In order to select other tags, you
+can save `.env.sample` file as `.env` and modify `.env`'s content to suite your needs.
+
 ## Use cases
 
 This section describes the "script" to run when testing a given use case.
