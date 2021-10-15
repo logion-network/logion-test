@@ -1,7 +1,7 @@
 # Logion Test
 
-The purpose of this project is to easily deploy locally a complete logion node in order to enable the testing of the
-platform as a whole.
+The purpose of this project is to easily deploy locally a complete logion infrastructure in order to enable
+the testing of the platform as a whole.
 
 ## Usage
 
