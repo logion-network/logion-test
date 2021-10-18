@@ -9,7 +9,7 @@ Run the following command to execute logion locally:
 
     docker-compose up
 
-You should now be able to connect to the app ([http://localhost](http://localhost)).
+You should now be able to connect to the app ([http://localhost:8080](http://localhost:8080)).
 
 Initially, you may see some screens assisting you in the on-boarding process which essentially consists in:
 
