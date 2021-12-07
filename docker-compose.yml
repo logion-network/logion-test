@@ -13,7 +13,7 @@ services:
     networks:
       - node1-net
   node1:
-    image: logionnetwork/logion-node:${NODE_TAG:-latest}
+    image: logionnetwork/logion-node:grant1-milestone1
     environment:
       - NODE_KEY=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a
       - CUSTOM_OPTIONS=--alice --no-mdns --ws-external --rpc-cors all
@@ -21,7 +21,7 @@ services:
       - node1-net
       - nodes
   backend1:
-    image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
+    image: logionnetwork/logion-backend:grant1-milestone1
     environment:
       - TYPEORM_HOST=private-database1
       - WS_PROVIDER_URL=ws://node1:9944
@@ -32,7 +32,7 @@ services:
     networks:
       - node1-net
   frontend1:
-    image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
+    image: logionnetwork/logion-frontend:grant1-milestone1
     ports:
       - 8080:80
       - 9944:9944
@@ -56,7 +56,7 @@ services:
     networks:
       - node2-net
   node2:
-    image: logionnetwork/logion-node:${NODE_TAG:-latest}
+    image: logionnetwork/logion-node:grant1-milestone1
     environment:
       - NODE_KEY=6ce3be907dbcabf20a9a5a60a712b4256a54196000a8ed4050d352bc113f8c58
       - CUSTOM_OPTIONS=--bob --no-mdns --bootnodes /dns4/node1/tcp/30333/p2p/12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2 --ws-external --rpc-cors all
@@ -64,7 +64,7 @@ services:
       - node2-net
       - nodes
   backend2:
-    image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
+    image: logionnetwork/logion-backend:grant1-milestone1
     environment:
       - TYPEORM_HOST=private-database2
       - WS_PROVIDER_URL=ws://node2:9944
@@ -75,7 +75,7 @@ services:
     networks:
       - node2-net
   frontend2:
-    image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
+    image: logionnetwork/logion-frontend:grant1-milestone1
     ports:
       - 8081:80
       - 9945:9944
@@ -99,7 +99,7 @@ services:
     networks:
       - node3-net
   node3:
-    image: logionnetwork/logion-node:${NODE_TAG:-latest}
+    image: logionnetwork/logion-node:grant1-milestone1
     environment:
       - NODE_KEY=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e
       - CUSTOM_OPTIONS=--charlie --no-mdns --bootnodes /dns4/node1/tcp/30333/p2p/12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2 --ws-external --rpc-cors all
@@ -107,7 +107,7 @@ services:
       - node3-net
       - nodes
   backend3:
-    image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
+    image: logionnetwork/logion-backend:grant1-milestone1
     environment:
       - TYPEORM_HOST=private-database3
       - WS_PROVIDER_URL=ws://node3:9944
@@ -118,7 +118,7 @@ services:
     networks:
       - node3-net
   frontend3:
-    image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
+    image: logionnetwork/logion-frontend:grant1-milestone1
     ports:
       - 8082:80
       - 9946:9944
