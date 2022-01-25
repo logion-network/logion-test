@@ -3,6 +3,7 @@ networks:
   node1-net:
   node2-net:
   node3-net:
+  directory-net:
   nodes:
 services:
 # ----------------------------------------- Logion node 1 --------------------------------------------------------------
@@ -134,3 +135,22 @@ services:
       - NODE_HOST_PORT=node3:9944
     networks:
       - node3-net
+# ----------------------------------------- Logion directory --------------------------------------------------------------
+  directory-database:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=secret
+    networks:
+      - directory-net
+  directory:
+    image: logionnetwork/logion-directory:${BACKEND_TAG:-latest}
+    ports:
+      - 8090:8080
+    environment:
+      - WS_PROVIDER_URL=ws://node1:9944
+      - TYPEORM_HOST=directory-database
+    depends_on:
+      - node1
+      - directory-database
+    networks:
+      - directory-net
