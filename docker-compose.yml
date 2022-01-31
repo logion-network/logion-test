@@ -153,4 +153,5 @@ services:
       - node1
       - directory-database
     networks:
+      - node1-net
       - directory-net
