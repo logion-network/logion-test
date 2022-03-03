@@ -27,6 +27,8 @@ services:
       - TYPEORM_HOST=private-database1
       - WS_PROVIDER_URL=ws://node1:9944
       - OWNER=5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+      - DIRECTORY_URL=http://localhost:8090
+      - SMTP_ENABLED=false
     depends_on:
       - node1
       - private-database1
@@ -70,6 +72,8 @@ services:
       - TYPEORM_HOST=private-database2
       - WS_PROVIDER_URL=ws://node2:9944
       - OWNER=5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+      - DIRECTORY_URL=http://localhost:8090
+      - SMTP_ENABLED=false
     depends_on:
       - node2
       - private-database2
@@ -113,6 +117,8 @@ services:
       - TYPEORM_HOST=private-database3
       - WS_PROVIDER_URL=ws://node3:9944
       - OWNER=5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
+      - DIRECTORY_URL=http://localhost:8090
+      - SMTP_ENABLED=false
     depends_on:
       - node3
       - private-database3
