@@ -18,6 +18,7 @@ services:
     environment:
       - NODE_KEY=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a
       - CUSTOM_OPTIONS=--alice --no-mdns --ws-external --rpc-cors all
+      - CHAIN_SPEC=local
     networks:
       - node1-net
       - nodes
@@ -63,6 +64,7 @@ services:
     environment:
       - NODE_KEY=6ce3be907dbcabf20a9a5a60a712b4256a54196000a8ed4050d352bc113f8c58
       - CUSTOM_OPTIONS=--bob --no-mdns --bootnodes /dns4/node1/tcp/30333/p2p/12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2 --ws-external --rpc-cors all
+      - CHAIN_SPEC=local
     networks:
       - node2-net
       - nodes
@@ -96,51 +98,6 @@ services:
       - NODE_HOST_PORT=node2:9944
     networks:
       - node2-net
-# ----------------------------------------- Logion node 3 --------------------------------------------------------------
-  private-database3:
-    image: postgres:12
-    environment:
-      - POSTGRES_PASSWORD=secret
-    networks:
-      - node3-net
-  node3:
-    image: logionnetwork/logion-node:${NODE_TAG:-latest}
-    environment:
-      - NODE_KEY=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e
-      - CUSTOM_OPTIONS=--charlie --no-mdns --bootnodes /dns4/node1/tcp/30333/p2p/12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2 --ws-external --rpc-cors all
-    networks:
-      - node3-net
-      - nodes
-  backend3:
-    image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
-    environment:
-      - TYPEORM_HOST=private-database3
-      - WS_PROVIDER_URL=ws://node3:9944
-      - OWNER=5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
-      - DIRECTORY_URL=http://localhost:8090
-      - SMTP_ENABLED=false
-    depends_on:
-      - node3
-      - private-database3
-    networks:
-      - node3-net
-  frontend3:
-    image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
-    ports:
-      - 8082:80
-      - 9946:9944
-    volumes:
-    - ./front_config.js:/usr/share/nginx/html/config.js
-    - ./front_web3.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - backend3
-      - node3
-    environment:
-      - CERTBOT_EMAIL=user3@invalid.domain
-      - BACKEND_HOST_PORT=backend3:8080
-      - NODE_HOST_PORT=node3:9944
-    networks:
-      - node3-net
 # ----------------------------------------- Logion directory --------------------------------------------------------------
   directory-database:
     image: postgres:12

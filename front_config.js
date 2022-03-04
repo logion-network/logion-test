@@ -9,10 +9,6 @@ let CONFIG = {
         {
             "peerId": "12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust",
             "socket": "ws://localhost:9945"
-        },
-        {
-            "peerId": "12D3KooWJvyP3VJYymTqG7eH4PM5rN4T2agk5cdNCfNymAqwqcvZ",
-            "socket": "ws://localhost:9946"
         }
     ]
 };
