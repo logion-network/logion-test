@@ -10,7 +10,7 @@ networks:
 services:
 # ----------------------------------------- Logion node 1 --------------------------------------------------------------
   private-database1:
-    image: postgres:12
+    image: logionnetwork/logion-postgres:latest
     environment:
       - POSTGRES_PASSWORD=secret
       - ENC_PASSWORD=secret
@@ -82,7 +82,7 @@ services:
       - nodes
 # ----------------------------------------- Logion node 2 --------------------------------------------------------------
   private-database2:
-    image: postgres:12
+    image: logionnetwork/logion-postgres:latest
     environment:
       - POSTGRES_PASSWORD=secret
     networks:
@@ -153,7 +153,7 @@ services:
 # ----------------------------------------- Logion node 3 --------------------------------------------------------------
 # Uncomment below section if you want to bring Charlie's node up
   # private-database3:
-  #   image: postgres:12
+  #   image: logionnetwork/logion-postgres:latest
   #   environment:
   #     - POSTGRES_PASSWORD=secret
   #   networks:
