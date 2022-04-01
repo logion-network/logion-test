@@ -30,6 +30,8 @@ services:
   backend1:
     image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
     environment:
+      - JWT_SECRET=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a
+      - JWT_ISSUER=12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2
       - TYPEORM_HOST=private-database1
       - WS_PROVIDER_URL=ws://node1:9944
       - OWNER=5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
@@ -101,6 +103,8 @@ services:
   backend2:
     image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
     environment:
+      - JWT_SECRET=6ce3be907dbcabf20a9a5a60a712b4256a54196000a8ed4050d352bc113f8c58
+      - JWT_ISSUER=12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust
       - TYPEORM_HOST=private-database2
       - WS_PROVIDER_URL=ws://node2:9944
       - OWNER=5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
@@ -210,6 +214,8 @@ services:
     ports:
       - 127.0.0.1:8090:8080
     environment:
+      - JWT_SECRET=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a
+      - JWT_ISSUER=12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2
       - WS_PROVIDER_URL=ws://node1:9944
       - TYPEORM_HOST=directory-database
     depends_on:
