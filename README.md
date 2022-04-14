@@ -86,6 +86,6 @@ This section describes the "script" to run when testing a given use case.
 ### Distributed backup test
 
 0. If not already done, add data to the private database (e.g. by running the steps of use case "Account protection").
-1. Run `./scripts/download_tools.sh` (if not already done).
-2. Run `./scripts/backup_restore.sh`: this will create an encrypted backup, store it using the private IPFS cluster, clear the private database and finally 
-   restore the backup.
+1. Wait for more or less one minute to make sure that all data were backed up (see [here](https://github.com/logion-network/logion-pg-backup-manager#readme) for 
+   a detailed explanation of why this is so).
+2. Run `./scripts/restore_demo.sh`: this will clear the private database of node 1 and restore the data from IPFS.

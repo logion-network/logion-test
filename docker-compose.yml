@@ -13,11 +13,38 @@ services:
     image: logionnetwork/logion-postgres:latest
     environment:
       - POSTGRES_PASSWORD=secret
-      - ENC_PASSWORD=secret
     networks:
       - node1-net
     volumes:
-      - ./db_backup:/db_backup
+      - ./db_data:/var/lib/postgresql/data/
+      - ./postgres.conf:/etc/postgresql/postgresql.conf
+    command: [ "-c",  "config_file=/etc/postgresql/postgresql.conf" ]
+  backup_manager1:
+    image: logionnetwork/logion-pg-backup-manager:latest
+    depends_on:
+      - private-database1
+      - ipfs-cluster1
+    environment:
+      - ENC_PASSWORD=secret
+      - LOG_DIRECTORY=/opt/logion-pg-backup-manager/log/
+      - PG_USER=postgres
+      - PG_DATABASE=postgres
+      - PG_HOST=private-database1
+      - IPFS_CLUSTER_HOST=/dns4/ipfs-cluster1/tcp/9094
+      - IPFS_HOST=/dns4/ipfs1/tcp/5001
+      - TRIGGER_CRON=*/10 * * * * *
+      - IPFS_MIN_REPLICA=1
+      - IPFS_MAX_REPLICA=2
+      - SMTP_ENABLED=false
+      - MAX_FULL_BACKUPS=2
+      - MAX_DURATION_SINCE_LAST_FULL_BACKUP=01:00
+    networks:
+      - node1-net
+      - nodes
+    volumes:
+      - ./db_backup:/opt/logion-pg-backup-manager/work
+      - ./db_data/log:/opt/logion-pg-backup-manager/log/
+      - ./config/.pgpass:/root/.pgpass
   node1:
     image: logionnetwork/logion-node:${NODE_TAG:-latest}
     environment:

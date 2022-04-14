@@ -3,4 +3,5 @@
 .idea
 
 /tools
-/db_backup/*.dat
+/db_backup
+/db_data

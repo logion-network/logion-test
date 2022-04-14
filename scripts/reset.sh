@@ -3,4 +3,5 @@
 set -e
 
 docker-compose down
-./scripts/start.sh
+sudo rm -rf db_backup db_data
+./scripts/init.sh
