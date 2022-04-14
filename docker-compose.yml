@@ -36,6 +36,7 @@ services:
       - IPFS_MIN_REPLICA=1
       - IPFS_MAX_REPLICA=2
       - SMTP_ENABLED=false
+      - MAIL_SUBJECT_PREFIX=[logion-test] 
       - MAX_FULL_BACKUPS=2
       - MAX_DURATION_SINCE_LAST_FULL_BACKUP=01:00
     networks:
