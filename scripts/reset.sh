@@ -2,6 +2,5 @@
 
 set -e
 
-docker-compose down
-sudo rm -rf db_backup db_data
-./scripts/init.sh
+./scripts/down.sh
+./scripts/up.sh

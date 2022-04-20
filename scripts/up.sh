@@ -4,6 +4,8 @@ set -e
 
 mkdir -p db_data
 sudo chown -R 999:999 db_data # Make sure that the directory has proper ownership for the postgresql container
+docker-compose up -d private-database1
+sleep 1 # Wait for postgres to be ready
 chmod 600 config/.pgpass # Without this, the pg clients used by the backup manager will fail
 docker-compose up -d
 

@@ -1,13 +1,21 @@
 # Logion Test
 
-The purpose of this project is to easily deploy locally a complete logion infrastructure in order to enable
-the testing of the platform as a whole.
+The purpose of this project is to easily deploy a complete logion infrastructure locally in order to enable
+the functional testing of the platform as a whole.
+
+## Requirements
+
+- Docker
+- Docker Compose
+- Bash (see scripts for more details)
 
 ## Usage
 
 Run the following command to execute logion locally:
 
-    ./scripts/start.sh
+```
+./scripts/up.sh
+```
 
 You should now be able to connect to the app ([http://localhost:8080](http://localhost:8080)).
 
@@ -25,6 +33,11 @@ account switcher (upper right corner of the window) in order to:
 
 Note that, by default, logion's Docker images with `latest` tag are being used. In order to select other tags, you
 can save `.env.sample` file as `.env` and modify `.env`'s content to suite your needs.
+
+Once you are done testing, you may want to:
+
+- Clean-up: run `./scripts/down.sh`
+- Restart from scratch: run `./scripts/reset.sh`
 
 ## Use cases
 
