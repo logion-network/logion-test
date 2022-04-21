@@ -36,7 +36,7 @@ services:
       - IPFS_MIN_REPLICA=1
       - IPFS_MAX_REPLICA=2
       - SMTP_ENABLED=false
-      - MAIL_SUBJECT_PREFIX=[logion-test] 
+      - MAIL_SUBJECT_PREFIX=[logion-test]
       - MAX_FULL_BACKUPS=2
       - MAX_DURATION_SINCE_LAST_FULL_BACKUP=01:00
     networks:
@@ -65,12 +65,18 @@ services:
       - OWNER=5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
       - DIRECTORY_URL=http://directory:8080
       - SMTP_ENABLED=false
+      - IPFS_CLUSTER_HOST=/dns4/ipfs-cluster1/tcp/9094
+      - IPFS_HOST=/dns4/ipfs1/tcp/5001
+      - IPFS_MIN_REPLICA=1
+      - IPFS_MAX_REPLICA=2
     depends_on:
       - node1
       - private-database1
+      - ipfs-cluster1
     networks:
       - node1-net
       - backend-directory-net
+      - nodes
   frontend1:
     image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
     ports:
@@ -138,12 +144,18 @@ services:
       - OWNER=5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
       - DIRECTORY_URL=http://directory:8080
       - SMTP_ENABLED=false
+      - IPFS_CLUSTER_HOST=/dns4/ipfs-cluster2/tcp/9094
+      - IPFS_HOST=/dns4/ipfs2/tcp/5001
+      - IPFS_MIN_REPLICA=1
+      - IPFS_MAX_REPLICA=2
     depends_on:
       - node2
       - private-database2
+      - ipfs-cluster2
     networks:
       - node2-net
       - backend-directory-net
+      - nodes
   frontend2:
     image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
     ports:
@@ -184,52 +196,83 @@ services:
       - nodes
 # ----------------------------------------- Logion node 3 --------------------------------------------------------------
 # Uncomment below section if you want to bring Charlie's node up
-  # private-database3:
-  #   image: logionnetwork/logion-postgres:latest
-  #   environment:
-  #     - POSTGRES_PASSWORD=secret
-  #   networks:
-  #     - node3-net
-  # node3:
-  #   image: logionnetwork/logion-node:${NODE_TAG:-latest}
-  #   environment:
-  #     - NODE_KEY=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e
-  #     - CUSTOM_OPTIONS=--charlie --no-mdns --bootnodes /dns4/node1/tcp/30333/p2p/12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2 --ws-external --rpc-cors all
-  #     - CHAIN_SPEC=test
-  #   networks:
-  #     - node3-net
-  #     - nodes
-  # backend3:
-  #   image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
-  #   environment:
-  #     - TYPEORM_HOST=private-database3
-  #     - WS_PROVIDER_URL=ws://node3:9944
-  #     - OWNER=5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
-  #     - DIRECTORY_URL=http://directory:8080
-  #     - SMTP_ENABLED=false
-  #   depends_on:
-  #     - node3
-  #     - private-database3
-  #   networks:
-  #     - node3-net
-  #     - backend-directory-net
-  # frontend3:
-  #   image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
-  #   ports:
-  #     - 127.0.0.1:8082:80
-  #     - 127.0.0.1:9946:9944
-  #   volumes:
-  #   - ./front_config.js:/usr/share/nginx/html/config.js
-  #   - ./front_web3.conf:/etc/nginx/conf.d/default.conf
-  #   depends_on:
-  #     - backend3
-  #     - node3
-  #   environment:
-  #     - CERTBOT_EMAIL=user3@invalid.domain
-  #     - BACKEND_HOST_PORT=backend3:8080
-  #     - NODE_HOST_PORT=node3:9944
-  #   networks:
-  #     - node3-net
+#  private-database3:
+#    image: logionnetwork/logion-postgres:latest
+#    environment:
+#      - POSTGRES_PASSWORD=secret
+#    networks:
+#      - node3-net
+#  node3:
+#    image: logionnetwork/logion-node:${NODE_TAG:-latest}
+#    environment:
+#      - NODE_KEY=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e
+#      - CUSTOM_OPTIONS=--charlie --no-mdns --bootnodes /dns4/node1/tcp/30333/p2p/12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2 --ws-external --rpc-cors all
+#      - CHAIN_SPEC=test
+#    depends_on:
+#      - node1
+#    networks:
+#      - node3-net
+#      - nodes
+#  backend3:
+#    image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
+#    environment:
+#      - JWT_SECRET=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e
+#      - JWT_ISSUER=12D3KooWJvyP3VJYymTqG7eH4PM5rN4T2agk5cdNCfNymAqwqcvZ
+#      - TYPEORM_HOST=private-database3
+#      - WS_PROVIDER_URL=ws://node3:9944
+#      - OWNER=5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
+#      - DIRECTORY_URL=http://directory:8080
+#      - SMTP_ENABLED=false
+#      - IPFS_CLUSTER_HOST=/dns4/ipfs-cluster3/tcp/9094
+#      - IPFS_HOST=/dns4/ipfs3/tcp/5001
+#      - IPFS_MIN_REPLICA=1
+#      - IPFS_MAX_REPLICA=2
+#    depends_on:
+#      - node3
+#      - private-database3
+#      - ipfs-cluster3
+#    networks:
+#      - node3-net
+#      - backend-directory-net
+#      - nodes
+#  frontend3:
+#    image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
+#    ports:
+#      - 127.0.0.1:8082:80
+#      - 127.0.0.1:9946:9944
+#    volumes:
+#      - ./front_config.js:/usr/share/nginx/html/config.js
+#      - ./front_web3.conf:/etc/nginx/conf.d/default.conf
+#    depends_on:
+#      - backend3
+#      - node3
+#    environment:
+#      - CERTBOT_EMAIL=user3@invalid.domain
+#      - BACKEND_HOST_PORT=backend3:8080
+#      - NODE_HOST_PORT=node3:9944
+#    networks:
+#      - node3-net
+#  ipfs3:
+#    image: ipfs/go-ipfs:v0.12.0
+#    volumes:
+#      - ./config/ipfs3/config:/data/ipfs/config:ro
+#      - ./config/ipfs3/datastore_spec:/data/ipfs/datastore_spec:ro
+#      - ./config/ipfs3/swarm.key:/data/ipfs/swarm.key:ro
+#      - ./config/ipfs3/version:/data/ipfs/version:ro
+#    networks:
+#      - nodes
+#    depends_on:
+#      - ipfs1
+#  ipfs-cluster3:
+#    image: ipfs/ipfs-cluster:v0.14.5
+#    depends_on:
+#      - ipfs-cluster1
+#      - ipfs3
+#    volumes:
+#      - ./config/ipfs-cluster3/identity.json:/data/ipfs-cluster/identity.json:ro
+#      - ./config/ipfs-cluster3/service.json:/data/ipfs-cluster/service.json:ro
+#    networks:
+#      - nodes
 # ----------------------------------------- Logion directory --------------------------------------------------------------
   directory-database:
     image: postgres:12
