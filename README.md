@@ -45,6 +45,10 @@ This section describes the "script" to run when testing a given use case.
 
 ### Account protection
 
+Below steps are executed by a new user which wants to activate the protection on its account. Essentially, the process consists in contacting two legal officers to ask them to become "friends" (in the recovery pallet sense). The legal officers, after doing their due diligence, may accept the request. Once both legal officers accepted, the new user may activate the protection on-chain.
+
+Note that currently, a legal officer has to send some tokens to new users. Otherwise, they would not be able to submit extrinsics. A better solution will be designed in the future.
+
 0. Deploy logion locally.
 1. Add [test accounts](https://github.com/logion-network/logion-wallet#test-users) to your [Polkadot extension](https://polkadot.js.org/extension/).
 2. Log in as a regular user (i.e. any account which is not part of the set of test legal officers).
@@ -63,6 +67,8 @@ This section describes the "script" to run when testing a given use case.
 14. With the [Polkadot JS app](https://polkadot.js.org/apps), see that the account is now recoverable.
 
 ### Account recovery
+
+Below steps are executed by an existing user which wants to gain access to one of its protected accounts after he/she lost the keys. Essentially, the process consists in creating a new account and asking to the legal officers which protected the lost account (the "friends") to "vouch" for the recovery request on-chain. Once both legal officers vouched for the request (after doing their due diligence), the user can claim the access to the lost account using the new one. The new account then acts as a proxy and can be used to transfer all the assets in the lost account to the new account.
 
 0. If not already done, run steps of "Account protection" use case.
 1. Log in as another regular user and Alice.
@@ -87,18 +93,43 @@ This section describes the "script" to run when testing a given use case.
 
 ### Register legal officers with directory
 
+The following procedure outlines the technical onboarding of a new legal officer. Step 2 is generally handled by the network operator. The next steps
+represent what a legal officer does in order to register himself/herself with the directory. In a real setup, step 2 must be completed with the actual
+registration of the Substrate node (both as a well-known node and as a validator). Also, step 4 is generally replaced by the actual provisioning of a
+server and the setup of the new logion node.
+
 0. Deploy logion locally.
-1. With the [Polkadot JS app](https://polkadot.js.org/apps), register Charlie as a legal officer by executing the extrinsic
+1. Add [test accounts](https://github.com/logion-network/logion-wallet#test-users) to your [Polkadot extension](https://polkadot.js.org/extension/).
+2. With the [Polkadot JS app](https://polkadot.js.org/apps), register Charlie as a legal officer by executing the following extrinsic (sign with Alice **as sudo**):
    `loAuthorityList.addLegalOfficer(legalOfficerId)` with `legalOfficerId` equal to `5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y`.
-2. Log in as Charlie, set the name to "Charlie" and Node Base URL to `http://locahost:8082`, click on "Save" then "Refresh".
+3. Log in as Charlie, set the name to "Charlie" and Node Base URL to `http://localhost:8082`, click on "Save" then "Refresh".
    You should now see an error message telling that Charlie's node is unreachable.
-3. In the `docker-compose.yml` file, uncomment the 2 sections starting with comment `Uncomment next line if you want to bring Charlie's node up`.
-4. Start the new node by executing `docker-compose up -d`.
-5. Go to `http://localhost:8082` and log in as Charlie.
+4. In the `docker-compose.yml` file, uncomment the 2 sections starting with comment `Uncomment next line if you want to bring Charlie's node up` and ending with `Stop uncommenting here` (note that the space after the # must be deleted as well, otherwise you would get invalid YAML; most IDE's provide an "uncomment" command which should work properly).
+5. Start the new node by executing `docker-compose up -d`.
+6. Go to `http://localhost:8082` and log in as Charlie.
 
 ### Distributed backup test
+
+Below steps simulate a disaster recovery. Step 2 essentially consists in erasing node 1's private data then restoring them (see script for more details).
 
 0. If not already done, add data to the private database (e.g. by running the steps of use case "Account protection").
 1. Wait for more or less one minute to make sure that all data were backed up (see [here](https://github.com/logion-network/logion-pg-backup-manager#readme) for 
    a detailed explanation of why this is so).
 2. Run `./scripts/restore_demo.sh`: this will clear the private database of node 1 and restore the data from IPFS.
+
+### Multisig
+
+Below steps describe how a user, after activating its protection (step 0), is able to protect assets by transferring them into its Vault (steps 2 and 3) and
+how, later, it's able to transfer the assets back with one of its legal officers actually countersigning the operation (steps 6 to 9).
+
+0. If not already done, run steps of "Account protection" use case.
+1. Switch to the regular user
+2. In the menu, click on "Wallet" then "Send to Vault" button
+3. Set an amount (lower than available balance, mind the units), click "Transfer" and sign.
+4. In the menu, click on "Vault", you should now see the transferred LGNTs in your Vault (i.e. the multisig account).
+5. On the logion token row, click on "More".
+6. Click on "Request a vault-out transfer" then set the regular user's address, set an amount to transfer back and choose Alice.
+7. Click on transfer.
+8. Switch to legal officer Alice and, in the menu, click on "Vault-out requests".
+9. Click on the "V" in order to accept the request then click on "Proceed".
+10. Switch to the regular user and go back to the Vault, see that the transaction has been executed (Vault account balance is lower).
