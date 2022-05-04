@@ -60,7 +60,7 @@ Note that currently, a legal officer has to send some tokens to new users. Other
 8. Accept the request by clicking on "Yes" button and choose "Create the required Identity LOC". Click on "Submit", sign then click on "OK".
 9. Click on "Close and accept request", then click on "Confirm" and sign. You should now see the request marked as "Accepted" in the history.
 10. Log in legal officer Bob and execute steps 6 to 9.
-11. In the menu, click on "Wallet" then "Send" and transfer some LGNTs (0.0001 should do) to the user of step 2.
+11. In the menu, click on "Wallet" then "Send" and transfer some LGNTs (1 LGNT should do) to the user of step 2.
 12. Switch back to the regular user and, in the menu, click on "My Logion Protection".
 13. Click on "Activate" button and sign the transaction (this actually creates the recovery configuration on-chain,
     see [recovery pallet documentation](https://github.com/paritytech/substrate/blob/master/frame/recovery/src/lib.rs)).
