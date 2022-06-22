@@ -91,23 +91,6 @@ Below steps are executed by an existing user which wants to gain access to one o
     see [recovery pallet documentation](https://github.com/paritytech/substrate/blob/master/frame/recovery/src/lib.rs)).
 15. Click on "Transfer" to transfer your assets from recovered account.
 
-### Register legal officers with directory
-
-The following procedure outlines the technical onboarding of a new legal officer. Step 2 is generally handled by the network operator. The next steps
-represent what a legal officer does in order to register himself/herself with the directory. In a real setup, step 2 must be completed with the actual
-registration of the Substrate node (both as a well-known node and as a validator). Also, step 4 is generally replaced by the actual provisioning of a
-server and the setup of the new logion node.
-
-0. Deploy logion locally.
-1. Add [test accounts](https://github.com/logion-network/logion-wallet#test-users) to your [Polkadot extension](https://polkadot.js.org/extension/).
-2. With the [Polkadot JS app](https://polkadot.js.org/apps), register Charlie as a legal officer by executing the following extrinsic (sign with Alice **as sudo**):
-   `loAuthorityList.addLegalOfficer(legalOfficerId)` with `legalOfficerId` equal to `5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y`.
-3. Log in as Charlie, set the name to "Charlie" and Node Base URL to `http://localhost:8082`, click on "Save" then "Refresh".
-   You should now see an error message telling that Charlie's node is unreachable.
-4. In the `docker-compose.yml` file, uncomment the 2 sections starting with comment `Uncomment next line if you want to bring Charlie's node up` and ending with `Stop uncommenting here` (note that the space after the # must be deleted as well, otherwise you would get invalid YAML; most IDE's provide an "uncomment" command which should work properly).
-5. Start the new node by executing `docker-compose up -d`.
-6. Go to `http://localhost:8082` and log in as Charlie.
-
 ### Distributed backup test
 
 Below steps simulate a disaster recovery. Step 2 essentially consists in erasing node 1's private data then restoring them (see script for more details).
