@@ -9,6 +9,7 @@ networks:
 services:
 # ----------------------------------------- Logion node 1 --------------------------------------------------------------
   private-database1:
+    container_name: logion-test_private-database1_1
     image: logionnetwork/logion-postgres:${PG_TAG:-latest}
     environment:
       - POSTGRES_PASSWORD=secret
@@ -19,6 +20,7 @@ services:
       - ./postgres.conf:/etc/postgresql/postgresql.conf
     command: [ "-c",  "config_file=/etc/postgresql/postgresql.conf" ]
   backup_manager1:
+    container_name: logion-test_backup_manager1_1
     image: logionnetwork/logion-pg-backup-manager:${BM_TAG:-latest}
     depends_on:
       - private-database1
@@ -46,6 +48,7 @@ services:
       - ./db_data/log:/opt/logion-pg-backup-manager/log/
       - ./config/.pgpass:/root/.pgpass
   node1:
+    container_name: logion-test_node1_1
     image: logionnetwork/logion-node:${NODE_TAG:-latest}
     environment:
       - NODE_KEY=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a
@@ -55,6 +58,7 @@ services:
       - node1-net
       - nodes
   backend1:
+    container_name: logion-test_backend1_1
     image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
     environment:
       - JWT_SECRET=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a
@@ -78,6 +82,7 @@ services:
       - backend-directory-net
       - nodes
   frontend1:
+    container_name: logion-test_frontend1_1
     image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
     ports:
       - 127.0.0.1:8080:80
@@ -95,6 +100,7 @@ services:
     networks:
       - node1-net
   ipfs1:
+    container_name: logion-test_ipfs1_1
     image: ipfs/go-ipfs:v0.12.0
     ports:
       - 127.0.0.1:5001:5001
@@ -106,6 +112,7 @@ services:
     networks:
       - nodes
   ipfs-cluster1:
+    container_name: logion-test_ipfs-cluster1_1
     image: ipfs/ipfs-cluster:v0.14.5
     depends_on:
       - ipfs1
@@ -118,12 +125,14 @@ services:
       - nodes
 # ----------------------------------------- Logion node 2 --------------------------------------------------------------
   private-database2:
+    container_name: logion-test_private-database2_1
     image: logionnetwork/logion-postgres:${PG_TAG:-latest}
     environment:
       - POSTGRES_PASSWORD=secret
     networks:
       - node2-net
   node2:
+    container_name: logion-test_node2_1
     image: logionnetwork/logion-node:${NODE_TAG:-latest}
     environment:
       - NODE_KEY=6ce3be907dbcabf20a9a5a60a712b4256a54196000a8ed4050d352bc113f8c58
@@ -135,6 +144,7 @@ services:
       - node2-net
       - nodes
   backend2:
+    container_name: logion-test_backend2_1
     image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
     environment:
       - JWT_SECRET=6ce3be907dbcabf20a9a5a60a712b4256a54196000a8ed4050d352bc113f8c58
@@ -158,6 +168,7 @@ services:
       - backend-directory-net
       - nodes
   frontend2:
+    container_name: logion-test_frontend2_1
     image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
     ports:
       - 127.0.0.1:8081:80
@@ -175,6 +186,7 @@ services:
     networks:
       - node2-net
   ipfs2:
+    container_name: logion-test_ipfs2_1
     image: ipfs/go-ipfs:v0.12.0
     volumes:
       - ./config/ipfs2/config:/data/ipfs/config:ro
@@ -186,6 +198,7 @@ services:
     depends_on:
       - ipfs1
   ipfs-cluster2:
+    container_name: logion-test_ipfs2-cluster2_1
     image: ipfs/ipfs-cluster:v0.14.5
     depends_on:
       - ipfs-cluster1
@@ -197,12 +210,14 @@ services:
       - nodes
 # ----------------------------------------- Logion node 3 --------------------------------------------------------------
   private-database3:
+    container_name: logion-test_private-database3_1
     image: logionnetwork/logion-postgres:${PG_TAG:-latest}
     environment:
       - POSTGRES_PASSWORD=secret
     networks:
       - node3-net
   node3:
+    container_name: logion-test_node3_1
     image: logionnetwork/logion-node:${NODE_TAG:-latest}
     environment:
       - NODE_KEY=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e
@@ -214,6 +229,7 @@ services:
       - node3-net
       - nodes
   backend3:
+    container_name: logion-test_backend3_1
     image: logionnetwork/logion-backend:${BACKEND_TAG:-latest}
     environment:
       - JWT_SECRET=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e
@@ -237,6 +253,7 @@ services:
       - backend-directory-net
       - nodes
   frontend3:
+    container_name: logion-test_fromtend3_1
     image: logionnetwork/logion-frontend:${FRONTEND_TAG:-latest}
     ports:
       - 127.0.0.1:8082:80
@@ -254,6 +271,7 @@ services:
     networks:
       - node3-net
   ipfs3:
+    container_name: logion-test_ipfs3_1
     image: ipfs/go-ipfs:v0.12.0
     volumes:
       - ./config/ipfs3/config:/data/ipfs/config:ro
@@ -276,12 +294,14 @@ services:
       - nodes
 # ----------------------------------------- Logion directory --------------------------------------------------------------
   directory-database:
+    container_name: logion-test_directory-database_1
     image: postgres:12
     environment:
       - POSTGRES_PASSWORD=secret
     networks:
       - directory-net
   directory:
+    container_name: logion-test_directory_1
     image: logionnetwork/logion-directory:${DIRECTORY_TAG:-latest}
     ports:
       - 127.0.0.1:8090:8080
