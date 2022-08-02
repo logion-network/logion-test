@@ -6,6 +6,11 @@ networks:
   directory-net:
   nodes:
   backend-directory-net:
+
+volumes:
+  db_data:
+  db_backup:
+
 services:
 # ----------------------------------------- Logion node 1 --------------------------------------------------------------
   private-database1:
@@ -16,7 +21,7 @@ services:
     networks:
       - node1-net
     volumes:
-      - ./db_data:/var/lib/postgresql/data/
+      - db_data:/var/lib/postgresql/data/
       - ./postgres.conf:/etc/postgresql/postgresql.conf
     command: [ "-c",  "config_file=/etc/postgresql/postgresql.conf" ]
   backup_manager1:
@@ -27,7 +32,7 @@ services:
       - ipfs-cluster1
     environment:
       - ENC_PASSWORD=secret
-      - LOG_DIRECTORY=/opt/logion-pg-backup-manager/log/
+      - LOG_DIRECTORY=/opt/logion-pg-backup-manager/db_data/log/
       - PG_USER=postgres
       - PG_DATABASE=postgres
       - PG_HOST=private-database1
@@ -44,8 +49,8 @@ services:
       - node1-net
       - nodes
     volumes:
-      - ./db_backup:/opt/logion-pg-backup-manager/work
-      - ./db_data/log:/opt/logion-pg-backup-manager/log/
+      - db_backup:/opt/logion-pg-backup-manager/work
+      - db_data:/opt/logion-pg-backup-manager/db_data
       - ./config/.pgpass:/root/.pgpass
   node1:
     container_name: logion-test_node1_1

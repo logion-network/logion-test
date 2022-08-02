@@ -2,7 +2,6 @@
 
 set -e
 
-mkdir -p db_data db_backup
 docker-compose up -d private-database1
 sleep 1 # Wait for postgres to be ready
 chmod 600 config/.pgpass # Without this, the pg clients used by the backup manager will fail
