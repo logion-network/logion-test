@@ -24,12 +24,17 @@ Initially, you may see some screens assisting you in the on-boarding process whi
 1. Install the [Polkadot extension](https://polkadot.js.org/extension/).
 2. Add accounts into it.
 
-After that, you'll be invited to log in. This is done by signing with the extension. Once logged in, you can use the
-account switcher (upper right corner of the window) in order to:
+After that, you'll be invited to log in. This is done by signing with the extension. Once logged in, you will be able to
+switch accounts (upper right corner of the window).
 
-- log in with another account,
-- switch to another account
-- log out.
+The first time you start the logion infrastructure (or after a data reset), you'll have to register at least one legal officer.
+To do so, log in as Alice (see [here](https://github.com/logion-network/logion-wallet#test-users) to see how you can add Alice,
+Bob and Charlie to your extension) and fill-in:
+
+- directory data (at least name and e-mail) and
+- the node URL (`http://localhost:8080` for Alice, `http://localhost:8081` for Bob and `http://localhost:8082` for Charlie).
+
+Do not forget to save and publish.
 
 Note that, by default, logion's Docker images with `latest` tag are being used. In order to select other tags, you
 can save `.env.sample` file as `.env` and modify `.env`'s content to suite your needs.
