@@ -15,5 +15,6 @@ let CONFIG = {
             "socket": "ws://localhost:9946"
         }
     ],
-    logionClassification: ""
+    logionClassification: "",
+    creativeCommons: ""
 };
