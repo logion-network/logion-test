@@ -36,6 +36,9 @@ Bob and Charlie to your extension) and fill-in:
 
 Do not forget to save and publish.
 
+You may also use `./script/init_data.sh` which will automatically fill-in the data for all legal officers both in the directory
+and on chain. Before running the script for the first time, do not forget to install Node.JS and run `yarn`.
+
 Note that, by default, logion's Docker images with `latest` tag are being used. In order to select other tags, you
 can save `.env.sample` file as `.env` and modify `.env`'s content to suite your needs.
 
