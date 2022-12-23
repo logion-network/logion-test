@@ -1,0 +1,19 @@
+{
+  "name": "logion-test-init",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "Logion Team",
+    "email": "info@logion.network",
+    "url": "https://logion.network/"
+  },
+  "main": "dist/index.js",
+  "dependencies": {
+    "@logion/node-api": "^0.9.0-1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "yarn@3.2.3",
+  "type": "module"
+}
