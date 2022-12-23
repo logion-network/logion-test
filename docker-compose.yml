@@ -78,6 +78,7 @@ services:
       - IPFS_MIN_REPLICA=1
       - IPFS_MAX_REPLICA=2
       - ENC_PASSWORD=secret
+      - FEATURE_VOTE=true
     depends_on:
       - node1
       - private-database1
@@ -164,6 +165,7 @@ services:
       - IPFS_MIN_REPLICA=1
       - IPFS_MAX_REPLICA=2
       - ENC_PASSWORD=secret
+      - FEATURE_VOTE=true
     depends_on:
       - node2
       - private-database2
@@ -249,6 +251,7 @@ services:
       - IPFS_MIN_REPLICA=1
       - IPFS_MAX_REPLICA=2
       - ENC_PASSWORD=secret
+      - FEATURE_VOTE=true
     depends_on:
       - node3
       - private-database3
