@@ -1,4 +1,4 @@
-import { buildApi } from "@logion/node-api";
+import { buildApiClass } from "@logion/node-api";
 import { Keyring } from '@polkadot/api';
 
 let api;
@@ -7,9 +7,9 @@ let alice;
 let bob;
 let charlie;
 
-buildApi("ws://localhost:9944")
+buildApiClass("ws://localhost:9944")
 .then(api0 => {
-    api = api0;
+    api = api0.polkadot;
     keyring = new Keyring({ type: 'sr25519' });
     alice = keyring.addFromUri("0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a");
     bob = keyring.addFromUri("0x398f0c28f98885e046333d4a41c19cee4c37368a9832c6502f6cfd182e2aef89");
