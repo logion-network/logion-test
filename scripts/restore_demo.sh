@@ -18,13 +18,13 @@ docker cp logion-test_backup_manager1_1:/opt/logion-pg-backup-manager/work/journ
 
 # Kill node1
 print_section "Killing node1..."
-docker-compose stop private-database1 node1 backup_manager1 backend1 frontend1
-docker-compose rm -f private-database1 node1 backup_manager1 backend1 frontend1
+docker compose stop private-database1 node1 backup_manager1 backend1 frontend1
+docker compose rm -f private-database1 node1 backup_manager1 backend1 frontend1
 docker volume rm logion-test_db_backup logion-test_db_data
 
 # Re-create a database
 print_section "Re-creating node1 database..."
-docker-compose up -d private-database1
+docker compose up -d private-database1
 sleep 1 # Wait for postgres to be ready
 
 # Put journal in manager's data volume
@@ -39,7 +39,7 @@ docker run --rm -v logion-test_db_backup:/opt/logion-pg-backup-manager/work -v $
 
 # Start services
 print_section "Starting node1 node and backend..."
-docker-compose up -d node1 backend1 frontend1 backup_manager1
+docker compose up -d node1 backend1 frontend1 backup_manager1
 
 ##################################################################################################
 # In production, someone should check now that the node is behaving well again before proceeding #
@@ -47,4 +47,4 @@ docker-compose up -d node1 backend1 frontend1 backup_manager1
 
 # Put manager back into automatic mode (restore forces manual mode)
 print_section "Resume automatic backup..."
-docker-compose exec backup_manager1 bash -c 'echo "Backup" > /opt/logion-pg-backup-manager/work/command.txt'
+docker compose exec backup_manager1 bash -c 'echo "Backup" > /opt/logion-pg-backup-manager/work/command.txt'
