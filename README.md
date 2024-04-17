@@ -9,9 +9,20 @@ the functional testing of the platform as a whole.
 - Docker Compose
 - Bash (see scripts for more details)
 
+## Initial setup
+
+Below steps must be executed only if you did not yet create the `logion-test` network.
+
+- Create `logion-test network`: `docker network create logion-test`
+- Get network's gateway IP address: `docker network inspect logion-test | jq '.[0].IPAM.Config[0].Gateway'`
+- Set `RPC_WS` variable in `.env` file (see `.env.sample` for an example) with the above IP address
+
 ## Usage
 
-Run the following command to execute logion locally:
+First, instantiate the Logion chain locally
+(see [here](https://github.com/logion-network/logion-collator/?tab=readme-ov-file#test-locally) for instructions).
+
+In another terminal, run the following command to execute logion locally:
 
 ```
 ./scripts/up.sh
@@ -39,13 +50,12 @@ Do not forget to save and publish.
 You may also use `./script/init_data.sh` which will automatically fill-in the data for all legal officers both in the directory
 and on chain. Before running the script for the first time, do not forget to install Node.JS and run `yarn`.
 
-Note that, by default, logion's Docker images with `latest` tag are being used. In order to select other tags, you
-can save `.env.sample` file as `.env` and modify `.env`'s content to suite your needs.
+Note that, by default, logion's Docker images with `latest` tag are being used. In order to select other tags, update `.env` file.
 
 Once you are done testing, you may want to:
 
-- Clean-up: run `./scripts/down.sh`
-- Restart from scratch: run `./scripts/reset.sh`
+- Clean-up: run `./scripts/down.sh` and stop Zombienet
+- Restart from scratch: restart Zombienet, then run `./scripts/reset.sh`
 
 ## Use cases
 
