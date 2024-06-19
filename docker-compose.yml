@@ -41,7 +41,6 @@ services:
       - TYPEORM_HOST=private-database1
       - WS_PROVIDER_URL=ws://$RPC_WS
       - OWNER=5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-      - DIRECTORY_URL=http://directory:8080
       - SMTP_ENABLED=false
       - IPFS_CLUSTER_HOST=/dns4/ipfs-cluster1/tcp/9094
       - IPFS_HOST=/dns4/ipfs1/tcp/5001
@@ -101,7 +100,6 @@ services:
       - TYPEORM_HOST=private-database2
       - WS_PROVIDER_URL=ws://$RPC_WS
       - OWNER=5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
-      - DIRECTORY_URL=http://directory:8080
       - SMTP_ENABLED=false
       - IPFS_CLUSTER_HOST=/dns4/ipfs-cluster2/tcp/9094
       - IPFS_HOST=/dns4/ipfs2/tcp/5001
@@ -160,7 +158,6 @@ services:
       - TYPEORM_HOST=private-database3
       - WS_PROVIDER_URL=ws://$RPC_WS
       - OWNER=5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
-      - DIRECTORY_URL=http://directory:8080
       - SMTP_ENABLED=false
       - IPFS_CLUSTER_HOST=/dns4/ipfs-cluster3/tcp/9094
       - IPFS_HOST=/dns4/ipfs3/tcp/5001
@@ -203,21 +200,3 @@ services:
     volumes:
       - ./config/ipfs-cluster3/identity.json:/data/ipfs-cluster/identity.json:ro
       - ./config/ipfs-cluster3/service.json:/data/ipfs-cluster/service.json:ro
-# ----------------------------------------- Logion directory --------------------------------------------------------------
-  directory-database:
-    container_name: logion-test_directory-database_1
-    image: postgres:12
-    environment:
-      - POSTGRES_PASSWORD=secret
-  directory:
-    container_name: logion-test_directory_1
-    image: logionnetwork/logion-directory:${DIRECTORY_TAG:-latest}
-    ports:
-      - 127.0.0.1:8090:8080
-    environment:
-      - JWT_SECRET=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a
-      - JWT_ISSUER=12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2
-      - WS_PROVIDER_URL=ws://$RPC_WS
-      - TYPEORM_HOST=directory-database
-    depends_on:
-      - directory-database

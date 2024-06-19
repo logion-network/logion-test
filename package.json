@@ -9,7 +9,7 @@
   },
   "main": "dist/index.js",
   "dependencies": {
-    "@logion/node-api": "^0.16.0-3"
+    "@logion/node-api": "^0.31.1"
   },
   "engines": {
     "node": ">=18"
